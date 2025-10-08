@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CODM Community Hub | Your All-in-One Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #1a2a6c;
+            --secondary: #b21f1f;
+            --accent: #fdbb2d;
+            --dark: #0a0f2b;
+            --light: #f5f5f5;
+            --gray: #8a8a8a;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: rgba(10, 15, 43, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(253, 187, 45, 0.3);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8em;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .logo i {
+            font-size: 1.5em;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav a:hover, nav a.active {
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after, nav a.active::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+
+        /* Page Content */
+        .page {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            min-height: calc(100vh - 200px);
+            padding: 40px 0;
+        }
+
+        .page.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(10, 15, 43, 0.7);
+            border-radius: 15px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(253, 187, 45, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: var(--accent);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--dark);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(253, 187, 45, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(253, 187, 45, 0.6);
+        }
+
+        /* Sections */
+        .section {
+            background: rgba(10, 15, 43, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-title {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            font-size: 1.2em;
+        }
+
+        /* Checklist */
+        .checklist {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .checklist-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--accent);
+        }
+
+        .checklist-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .checklist-item input {
+            margin-top: 5px;
+            transform: scale(1.2);
+        }
+
+        .item-content h3 {
+            margin-bottom: 8px;
+            color: var(--light);
+        }
+
+        .item-content p {
+            color: var(--gray);
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        /* Video Grid */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .video-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-thumbnail {
+            height: 180px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            color: var(--light);
+        }
+
+        .video-info {
+            padding: 15px;
+        }
+
+        .video-info h3 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray);
+            font-size: 0.8em;
+        }
+
+        /* Guides Grid */
+        .guides-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .guide-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .guide-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .guide-icon {
+            height: 120px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+        }
+
+        .guide-content {
+            padding: 20px;
+        }
+
+        .guide-content h3 {
+            margin-bottom: 10px;
+        }
+
+        .guide-content p {
+            color: var(--gray);
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .guide-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* News Section */
+        .news-item {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .news-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .news-date {
+            background: var(--accent);
+            color: var(--dark);
+            width: 70px;
+            height: 70px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-weight: bold;
+        }
+
+        .news-date .day {
+            font-size: 1.8em;
+            line-height: 1;
+        }
+
+        .news-content h3 {
+            margin-bottom: 10px;
+        }
+
+        .news-content p {
+            color: var(--gray);
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .news-tag {
+            display: inline-block;
+            background: var(--secondary);
+            color: var(--light);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            display: grid;
+            gap: 15px;
+            max-width: 600px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group label {
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            font-size: 1em;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: var(--accent);
+            color: var(--dark);
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background: #ffcc44;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(253, 187, 45, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 15, 43, 0.95);
+            padding: 40px 0 20px;
+            margin-top: 60px;
+            border-top: 1px solid rgba(253, 187, 45, 0.3);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+            font-size: 0.9em;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .hero h1 {
+                font-size: 2.2em;
+            }
+
+            .checklist, .video-grid, .guides-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .news-item {
+                flex-direction: column;
+            }
+
+            .news-date {
+                width: 100%;
+                height: auto;
+                padding: 10px;
+                flex-direction: row;
+                gap: 10px;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8em;
+            }
+
+            .section-title {
+                font-size: 1.5em;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fas fa-crosshairs"></i>
+                <span>CODM HUB</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                    <li><a href="#" class="nav-link" data-page="guides">Guides</a></li>
+                    <li><a href="#" class="nav-link" data-page="videos">Videos</a></li>
+                    <li><a href="#" class="nav-link" data-page="news">News</a></li>
+                    <li><a href="#" class="nav-link" data-page="submit">Submit Content</a></li>
+                    <li><a href="#" class="nav-link" data-page="about">About</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <section id="home" class="page active">
+        <div class="container">
+            <div class="hero">
+                <h1>CODM Community Hub</h1>
+                <p>Your all-in-one platform for Call of Duty: Mobile guides, news, and top community content. Join thousands of players improving their skills and sharing their passion.</p>
+                <a href="#" class="cta-button" data-page="guides">Explore Guides <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-rocket"></i> Launch Checklist</h2>
+                <p>Track your progress as you build the ultimate CODM community platform.</p>
+                
+                <div class="checklist">
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check1">
+                        <div class="item-content">
+                            <h3>Site Name & Logo</h3>
+                            <p>Create a memorable name and logo that represents the CODM community</p>
+                        </div>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check2">
+                        <div class="item-content">
+                            <h3>Clear Tagline</h3>
+                            <p>Add a one-sentence description like "Your hub for CODM guides, news, and top community clips"</p>
+                        </div>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check3">
+                        <div class="item-content">
+                            <h3>Featured Content Section</h3>
+                            <p>Highlight your most important recent posts or videos</p>
+                        </div>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check4">
+                        <div class="item-content">
+                            <h3>Simple Navigation Menu</h3>
+                            <p>Clean menu with: Home, Guides, News, Videos, About</p>
+                        </div>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check5">
+                        <div class="item-content">
+                            <h3>Guides & Loadouts Page</h3>
+                            <p>Start with 3-5 foundational guides for new players and current meta</p>
+                        </div>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check6">
+                        <div class="item-content">
+                            <h3>Community Videos Page</h3>
+                            <p>Embed TikTok and YouTube videos in categories like "Top Plays" and "Funny Moments"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-fire"></i> Trending Now</h2>
+                <div class="video-grid">
+                    <div class="video-card">
+                        <div class="video-thumbnail">
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                        <div class="video-info">
+                            <h3>NEW META LOADOUTS for Season 9</h3>
+                            <div class="video-meta">
+                                <span>CODM Pro</span>
+                                <span>2 days ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="video-card">
+                        <div class="video-thumbnail">
+                            <i class="fab fa-tiktok"></i>
+                        </div>
+                        <div class="video-info">
+                            <h3>IMPOSSIBLE 1v5 CLUTCH</h3>
+                            <div class="video-meta">
+                                <span>Gameplay Highlights</span>
+                                <span>1 day ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="video-card">
+                        <div class="video-thumbnail">
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                        <div class="video-info">
+                            <h3>HOW TO MASTER MOVEMENT</h3>
+                            <div class="video-meta">
+                                <span>Movement Guide</span>
+                                <span>3 days ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guides Page -->
+    <section id="guides" class="page">
+        <div class="container">
+            <div class="hero">
+                <h1>Guides & Loadouts</h1>
+                <p>Master Call of Duty: Mobile with our comprehensive guides, weapon loadouts, and strategy tips from top players.</p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-book"></i> Beginner Guides</h2>
+                <div class="guides-grid">
+                    <div class="guide-card">
+                        <div class="guide-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div class="guide-content">
+                            <h3>Getting Started</h3>
+                            <p>Essential tips for new players to quickly improve their gameplay and understand core mechanics.</p>
+                            <a href="#" class="guide-link">Read Guide <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-card">
+                        <div class="guide-icon">
+                            <i class="fas fa-crosshairs"></i>
+                        </div>
+                        <div class="guide-content">
+                            <h3>Aiming Fundamentals</h3>
+                            <p>Learn how to improve your aim, sensitivity settings, and target acquisition techniques.</p>
+                            <a href="#" class="guide-link">Read Guide <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-card">
+                        <div class="guide-icon">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <div class="guide-content">
+                            <h3>Map Knowledge</h3>
+                            <p>Key positions, routes, and strategies for popular multiplayer maps in CODM.</p>
+                            <a href="#" class="guide-link">Read Guide <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-gun"></i> Weapon Loadouts</h2>
+                <div class="guides-grid">
+                    <div class="guide-card">
+                        <div class="guide-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div class="guide-content">
+                            <h3>Assault Rifles</h3>
+                            <p>Best AR loadouts for different playstyles and situations in ranked matches.</p>
+                            <a href="#" class="guide-link">View Loadouts <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-card">
+                        <div class="guide-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <div class="guide-content">
+                            <h3>SMGs</h3>
+                            <p>Optimized SMG builds for aggressive play and close-quarters combat.</p>
+                            <a href="#" class="guide-link">View Loadouts <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-card">
+                        <div class="guide-icon">
+                            <i class="fas fa-skull-crossbones"></i>
+                        </div>
+                        <div class="guide-content">
+                            <h3>Sniper Rifles</h3>
+                            <p>Quickscope and long-range sniper setups for dominating from a distance.</p>
+                            <a href="#" class="guide-link">View Loadouts <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Videos Page -->
+    <section id="videos" class="page">
+        <div class="container">
+            <div class="hero">
+                <h1>Community Videos</h1>
+                <p>Watch the best gameplay clips, tutorials, and entertaining content from the CODM community.</p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-play-circle"></i> Featured Videos</h2>
+                <div class="video-grid">
+                    <div class="video-card">
+                        <div class="video-thumbnail">
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                        <div class="video-info">
+                            <h3>TOP 5 PLAYS OF THE WEEK #47</h3>
+                            <div class="video-meta">
+                                <span>CODM Highlights</span>
+                                <span>2 days ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="video-card">
+                        <div class="video-thumbnail">
+                            <i class="fab fa-tiktok"></i>
+                        </div>
+                        <div class="video-info">
+                            <h3>SNIPER MONTAGE - INSANE SHOTS</h3>
+                            <div class="video-meta">
+                                <span>SniperGod</span>
+                                <span>1 day ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="video-card">
+                        <div class="video-thumbnail">
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                        <div class="video-info">
+                            <h3>HOW TO WIN EVERY GUNFIGHT</h3>
+                            <div class="video-meta">
+                                <span>Pro Guides</span>
+                                <span>3 days ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="video-card">
+                        <div class="video-thumbnail">
+                            <i class="fab fa-tiktok"></i>
+                        </div>
+                        <div class="video-info">
+                            <h3>FUNNY RAGE MOMENTS #12</h3>
+                            <div class="video-meta">
+                                <span>CODM Funny</span>
+                                <span>5 days ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="video-card">
+                        <div class="video-thumbnail">
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                        <div class="video-info">
+                            <h3>NEW SEASON 9 BATTLE PASS REVIEW</h3>
+                            <div class="video-meta">
+                                <span>CODM Updates</span>
+                                <span>1 week ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="video-card">
+                        <div class="video-thumbnail">
+                            <i class="fab fa-tiktok"></i>
+                        </div>
+                        <div class="video-info">
+                            <h3>1V5 CLUTCH IN RANKED</h3>
+                            <div class="video-meta">
+                                <span>Pro Player</span>
+                                <span>4 days ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-users"></i> Top Creators</h2>
+                <div class="video-grid">
+                    <div class="video-card">
+                        <div class="video-thumbnail" style="background: linear-gradient(45deg, #FF0000, #FF6B6B);">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="video-info">
+                            <h3>CODM Pro</h3>
+                            <p>High-level gameplay and advanced strategies</p>
+                            <div class="video-meta">
+                                <span>250K subs</span>
+                                <span>YouTube</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="video-card">
+                        <div class="video-thumbnail" style="background: linear-gradient(45deg, #00C2FF, #0066FF);">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="video-info">
+                            <h3>Gameplay Highlights</h3>
+                            <p>Best plays and montages from the community</p>
+                            <div class="video-meta">
+                                <span>150K subs</span>
+                                <span>TikTok</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="video-card">
+                        <div class="video-thumbnail" style="background: linear-gradient(45deg, #8A2BE2, #4B0082);">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="video-info">
+                            <h3>Movement Guide</h3>
+                            <p>Advanced movement techniques and tutorials</p>
+                            <div class="video-meta">
+                                <span>80K subs</span>
+                                <span>YouTube</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Page -->
+    <section id="news" class="page">
+        <div class="container">
+            <div class="hero">
+                <h1>News & Updates</h1>
+                <p>Stay updated with the latest Call of Duty: Mobile news, patch notes, and in-game events.</p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-newspaper"></i> Latest News</h2>
+                
+                <div class="news-item">
+                    <div class="news-date">
+                        <span class="day">15</span>
+                        <span class="month">SEP</span>
+                    </div>
+                    <div class="news-content">
+                        <h3>Season 9 Update Now Live</h3>
+                        <p>The latest season brings new maps, weapons, and a battle pass with exclusive rewards. Check out the complete patch notes for all changes.</p>
+                        <span class="news-tag">Update</span>
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-date">
+                        <span class="day">12</span>
+                        <span class="month">SEP</span>
+                    </div>
+                    <div class="news-content">
+                        <h3>World Championship 2023 Qualifiers Begin</h3>
+                        <p>Compete in the CODM World Championship qualifiers for a chance to win cash prizes and earn exclusive in-game rewards.</p>
+                        <span class="news-tag">Esports</span>
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-date">
+                        <span class="day">08</span>
+                        <span class="month">SEP</span>
+                    </div>
+                    <div class="news-content">
+                        <h3>New Mythic Weapon Draw Available</h3>
+                        <p>The latest mythic weapon draw features an exclusive blueprint with unique visual effects and custom animations.</p>
+                        <span class="news-tag">Content</span>
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-date">
+                        <span class="day">05</span>
+                        <span class="month">SEP</span>
+                    </div>
+                    <div class="news-content">
+                        <h3>Balance Changes Incoming</h3>
+                        <p>Developers have announced weapon balancing updates based on community feedback and gameplay data.</p>
+                        <span class="news-tag">Balance</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-calendar-alt"></i> Upcoming Events</h2>
+                
+                <div class="news-item">
+                    <div class="news-date">
+                        <span class="day">20</span>
+                        <span class="month">SEP</span>
+                    </div>
+                    <div class="news-content">
+                        <h3>Double XP Weekend</h3>
+                        <p>Earn double player XP, weapon XP, and battle pass XP during the weekend event.</p>
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-date">
+                        <span class="day">25</span>
+                        <span class="month">SEP</span>
+                    </div>
+                    <div class="news-content">
+                        <h3>Community Tournament</h3>
+                        <p>Join our weekly community tournament with cash prizes for the top teams.</p>
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-date">
+                        <span class="day">30</span>
+                        <span class="month">SEP</span>
+                    </div>
+                    <div class="news-content">
+                        <h3>Season 9 Mid-Season Update</h3>
+                        <p>New content and balance changes arriving in the mid-season update.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Submit Content Page -->
+    <section id="submit" class="page">
+        <div class="container">
+            <div class="hero">
+                <h1>Submit Content</h1>
+                <p>Share your best gameplay clips, guides, or suggestions with the CODM community.</p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-upload"></i> Submit Your Content</h2>
+                <p>We're always looking for great content to feature on our platform. Submit your videos, guides, or suggestions below.</p>
+                
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" placeholder="Enter your name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="Enter your email">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="content-type">Content Type</label>
+                        <select id="content-type">
+                            <option value="">Select content type</option>
+                            <option value="video">Gameplay Video</option>
+                            <option value="guide">Guide/Tutorial</option>
+                            <option value="suggestion">Suggestion</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="content-link">Content Link (YouTube, TikTok, etc.)</label>
+                        <input type="text" id="content-link" placeholder="Paste your content link here">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" placeholder="Describe your content..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Submit Content <i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-question-circle"></i> Submission Guidelines</h2>
+                
+                <div class="checklist">
+                    <div class="checklist-item">
+                        <div class="item-content">
+                            <h3>Video Quality</h3>
+                            <p>Ensure your videos are at least 720p resolution and have clear audio.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <div class="item-content">
+                            <h3>Original Content</h3>
+                            <p>Only submit content that you've created yourself or have permission to share.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <div class="item-content">
+                            <h3>Appropriate Content</h3>
+                            <p>Content must follow CODM's terms of service and community guidelines.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <div class="item-content">
+                            <h3>Attribution</h3>
+                            <p>We will credit you as the content creator when featuring your work.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Page -->
+    <section id="about" class="page">
+        <div class="container">
+            <div class="hero">
+                <h1>About CODM Hub</h1>
+                <p>Learn more about our mission to build the best Call of Duty: Mobile community platform.</p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-info-circle"></i> Our Mission</h2>
+                <p>CODM Hub was created to bring together the global Call of Duty: Mobile community in one centralized platform. We aim to provide valuable resources, foster connections between players, and showcase the incredible talent within our community.</p>
+                
+                <p>Whether you're a casual player looking to improve, a content creator wanting to share your work, or a competitive player seeking the latest meta strategies, CODM Hub is your home for everything Call of Duty: Mobile.</p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-history"></i> Our Story</h2>
+                <p>Founded in 2023 by passionate CODM players, our platform started as a simple idea: to create a space where players could easily find high-quality guides, stay updated with game news, and share their best moments with fellow enthusiasts.</p>
+                
+                <p>What began as a small project has grown into a comprehensive community hub featuring content from creators around the world, detailed weapon analyses, and up-to-date information on the ever-evolving CODM meta.</p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-users"></i> Join Our Community</h2>
+                <p>Become part of our growing community of CODM players, content creators, and fans. Follow us on social media, join our Discord server, and help us build the ultimate resource for Call of Duty: Mobile.</p>
+                
+                <div class="social-links" style="justify-content: center; margin-top: 30px;">
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>CODM Hub</h3>
+                    <p>Your all-in-one platform for Call of Duty: Mobile guides, news, and community content.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" data-page="home">Home</a></li>
+                        <li><a href="#" data-page="guides">Guides</a></li>
+                        <li><a href="#" data-page="videos">Videos</a></li>
+                        <li><a href="#" data-page="news">News</a></li>
+                        <li><a href="#" data-page="submit">Submit Content</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Weapon Stats</a></li>
+                        <li><a href="#">Map Strategies</a></li>
+                        <li><a href="#">Ranked Tips</a></li>
+                        <li><a href="#">Esports</a></li>
+                        <li><a href="#">Patch Notes</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 CODM Community Hub. This is a fan-made website and is not affiliated with Activision or Call of Duty.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // SPA Navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link, .footer-links a, .cta-button');
+            const pages = document.querySelectorAll('.page');
+            
+            // Function to switch pages
+            function switchPage(pageId) {
+                // Hide all pages
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Show selected page
+                document.getElementById(pageId).classList.add('active');
+                
+                // Update active nav link
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-page') === pageId) {
+                        link.classList.add('active');
+                    }
+                });
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            }
+            
+            // Add click event to all navigation links
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('data-page') || this.getAttribute('href').substring(1);
+                    if (pageId && pageId !== '#') {
+                        switchPage(pageId);
+                    }
+                });
+            });
+            
+            // Check for hash in URL on page load
+            if (window.location.hash) {
+                const pageId = window.location.hash.substring(1);
+                if (document.getElementById(pageId)) {
+                    switchPage(pageId);
+                }
+            }
+            
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const nav = document.querySelector('nav ul');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+            });
+            
+            // Adjust navigation for mobile on resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    nav.style.display = 'flex';
+                } else {
+                    nav.style.display = 'none';
+                }
+            });
+            
+            // Initialize mobile nav
+            if (window.innerWidth <= 768) {
+                nav.style.display = 'none';
+            }
+            
+            // Save checklist state
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                // Load saved state
+                const savedState = localStorage.getItem(checkbox.id);
+                if (savedState === 'true') {
+                    checkbox.checked = true;
+                }
+                
+                // Save state when changed
+                checkbox.addEventListener('change', function() {
+                    localStorage.setItem(this.id, this.checked);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
